@@ -42,6 +42,19 @@ export async function findById(req, res) {
   }
 }
 
-export async function upadate(req, res) {}
+export async function upadate(req, res) {
+  const { nome, poder } = req.body;
+  const { id } = req.params;
+
+  try {
+    await connectionDB.query(
+      "UPDATE pokemons SET nome=$1, poder=$2 WHERE id=$3",
+      [nome, poder, id]
+    );
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
 
 export async function remove(req, res) {}
