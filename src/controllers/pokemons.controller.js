@@ -57,4 +57,13 @@ export async function upadate(req, res) {
   }
 }
 
-export async function remove(req, res) {}
+export async function remove(req, res) {
+  const { id } = req.params;
+
+  try {
+    await connectionDB.query("DELETE FROM pokemons WHERE id=$1", [id]);
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
